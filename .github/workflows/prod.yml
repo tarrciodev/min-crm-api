@@ -27,6 +27,6 @@ jobs:
         runs-on: self-hosted
         steps:
             - name: pull docker image
-              run: docker pull ${{ secrets.DOCKER_USERNAME }}/mini-crm:latest
+              run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/mini-crm:latest
             - name: run container
-              run: docker run -d -p 8080:8080 --name mini-crm ${{ secrets.DOCKER_USERNAME }}/mini-crm:latest
+              run: sudo docker run -d -p 8080:8080 --name mini-crm ${{ secrets.DOCKER_USERNAME }}/mini-crm:latest
