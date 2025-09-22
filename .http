@@ -1,3 +1,4 @@
+# POST http://16.170.233.91:8080/client
 POST http://localhost:8080/client
 Content-Type: application/json
 
@@ -7,4 +8,13 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/client/
+GET http://localhost:8080/client/1/contacto
+
+###
+POST http://localhost:8080/client/1/contacto
+Content-Type: application/json
+
+{
+  "tipo": "Email",
+  "email": "tarcisio@email.com"
+}

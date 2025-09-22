@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tarciodev.mini_crm.DTO.ContactoRequestDTO;
 import com.tarciodev.mini_crm.model.Client;
 import com.tarciodev.mini_crm.model.Contacto;
 import com.tarciodev.mini_crm.repository.ClientRepository;
@@ -41,16 +42,18 @@ public class ClientController {
     }
 
     @PostMapping("/{id}/contacto")
-    public ResponseEntity<Contacto>createContacto(@PathVariable Long id, @RequestBody Contacto payload) {
+    public ResponseEntity<Contacto>createContacto(@PathVariable Long id, @RequestBody ContactoRequestDTO payload) {
         var clientExists = clientRepository.findById(id);
         if (clientExists.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        var client = clientExists.get();
-        payload.setId(null);
-        payload.setClient(client);
-        Contacto contacto = contactoRepository.save(payload);
+        Contacto newContacto = new Contacto();
+        newContacto.setClient(clientExists.get());
+        newContacto.setTipo(payload.tipo());
+        newContacto.setValor(payload.email());
+
+        Contacto contacto = contactoRepository.save(newContacto);
         return ResponseEntity.created(URI.create("/contacto/" + contacto.getId())).body(contacto);
     }
 
